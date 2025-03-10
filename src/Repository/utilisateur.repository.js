@@ -12,7 +12,10 @@ async function getAllUtilisateurs() {
 
 async function saveUtilisateur(user) {
   try {
-    const userData = new Utilisateur();
+    let userData = await userModel.findOne({ email: user.email });
+    if(userData == null){
+      userData = new Utilisateur();
+    }
     userData.nom = user.nom;
     userData.prenom = user.prenom;
     userData.email = user.email;
@@ -59,9 +62,18 @@ async function removeRoleFromUser(userId, roleId) {
   }
 }
 
+async function findUserByID(userId) {
+  try {
+    return await userModel.findById(userId).populate('roles', 'nom description');
+  } catch (e) {
+    console.error("Erreur lors de la recherche de l'utilisateur :", e);
+    throw e;
+  }
+}
 module.exports = { 
   getAllUtilisateurs, 
   saveUtilisateur, 
   addRoleToUser, 
-  removeRoleFromUser 
+  removeRoleFromUser,
+  findUserByID 
 };

@@ -49,9 +49,19 @@ async function removeRole(req, res, next) {
   }
 }
 
+async function findUserByID(req, res, next) {
+  try {
+    const data = await utilisateurRep.findUserByID(req.params.id);
+    res.status(200).send(data);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e);
+  }
+}
 module.exports = { 
   getAllUtilisateurs, 
   ajoutUtilisateur,
   addRole,
-  removeRole
+  removeRole,
+  findUserByID
 };

@@ -6,8 +6,11 @@ const checkRole = require("../src/middleware/checkRole");
 var router = express.Router();
 
 router.get("/", user.getAllUtilisateurs);
+router.get("/:id", user.findUserByID);
+
 // Seuls les managers peuvent ajouter des utilisateurs
-router.post("/", auth, checkRole('Manager'), user.ajoutUtilisateur);
+//router.post("/", auth, checkRole('Manager'), user.ajoutUtilisateur);
+router.post("/", user.ajoutUtilisateur);
 
 // Routes pour la gestion des rôles
 router.post("/roles/add", auth, checkRole('Manager'), user.addRole);
