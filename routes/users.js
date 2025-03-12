@@ -13,7 +13,7 @@ router.get("/:id", user.findUserByID);
 router.post("/", user.ajoutUtilisateur);
 
 // Routes pour la gestion des rôles
-router.post("/roles/add", auth, checkRole('Manager'), user.addRole);
-router.post("/roles/remove", auth, checkRole('Manager'), user.removeRole);
+router.post("/roles/add", auth, checkRole("MANAGER"), user.addRole);
+router.post("/roles/remove", auth, checkRole("MANAGER"), user.removeRole);
 
 module.exports = router;
