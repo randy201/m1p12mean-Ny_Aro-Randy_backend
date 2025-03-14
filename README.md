@@ -6,4 +6,9 @@ Projet de gestion de garage
 Rate Limiting - Pour éviter les attaques par force brute, ajoutons un rate limiter 
 
 # npm install helmet
-Headers de Sécurité - Ajoutons Helmet pour sécuriser les headers HTTP :
+Headers de Sécurité - Ajoutons Helmet pour sécuriser les headers HTTP
+
+12/03/2025
+# npm install nodemailer
+Ajoutons Nodemailer pour envoyer des emails
+ 
