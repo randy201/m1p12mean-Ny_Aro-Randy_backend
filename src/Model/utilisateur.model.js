@@ -61,7 +61,7 @@ utilisateurSchema.methods.comparePassword = async function (candidatePassword) {
 // Hide sensitive data when converting to JSON
 utilisateurSchema.methods.toJSON = function () {
   const user = this.toObject();
-  delete user.pass;
+  //delete user.pass;
   return user;
 };
 

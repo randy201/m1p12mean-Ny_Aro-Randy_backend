@@ -5,5 +5,6 @@ var router = express.Router();
 
 router.get("/", roleController.getAllRoles);
 router.post("/", roleController.ajoutRole);
+router.get("/:name", roleController.findByName);
 
 module.exports = router;
