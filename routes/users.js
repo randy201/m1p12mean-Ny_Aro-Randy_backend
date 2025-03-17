@@ -11,6 +11,8 @@ router.get("/:id", user.findUserByID);
 // Seuls les managers peuvent ajouter des utilisateurs
 //router.post("/", auth, checkRole('Manager'), user.ajoutUtilisateur);
 router.post("/", user.ajoutUtilisateur);
+// router.put("/:id/addRole", user.addRole);
+router.put("/:id", user.updateUtilisateur);
 
 // Routes pour la gestion des rôles
 router.post("/roles/add", auth, checkRole("MANAGER"), user.addRole);

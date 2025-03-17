@@ -1,10 +1,23 @@
-const express = require("express");
+// const express = require("express");
 const utilisateurRep = require("../Repository/utilisateur.repository");
 
 async function getAllUtilisateurs(req, res, next) {
   try {
-    const data = await utilisateurRep.getAllUtilisateurs();
-    res.status(200).send(data);
+    const type = req.query.role || null;
+    console.log(`le type est ${type}`);
+
+    if (
+      type !== "null" &&
+      type !== "undefined" &&
+      type !== "" &&
+      type !== null
+    ) {
+      const data = await utilisateurRep.getAllByRoleName(type);
+      res.status(200).send(data);
+    } else {
+      const data = await utilisateurRep.getAllUtilisateurs();
+      res.status(200).send(data);
+    }
   } catch (e) {
     console.error(e);
     res.status(500).send(e);
@@ -58,10 +71,27 @@ async function findUserByID(req, res, next) {
     res.status(500).send(e);
   }
 }
-module.exports = { 
-  getAllUtilisateurs, 
+
+async function updateUtilisateur(req, res, next) {
+  console.log(req.body.roles);
+  try {
+    const { _id, lastname, firstname, email, pass, roles } = req.body;
+    if (!_id || !lastname || !firstname || !email || !pass || !roles) {
+      return res.status(400).send({ message: "Tous les champs sont requis" });
+    }
+    const user = await utilisateurRep.updateUtilisateur(req.body);
+    res.status(200).send(user);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: e.message });
+  }
+}
+
+module.exports = {
+  getAllUtilisateurs,
   ajoutUtilisateur,
   addRole,
   removeRole,
-  findUserByID
+  findUserByID,
+  updateUtilisateur,
 };
