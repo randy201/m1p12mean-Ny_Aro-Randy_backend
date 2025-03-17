@@ -3,6 +3,11 @@ var user = require("../src/Controller/utilisateur.controller");
 const auth = require("../src/middleware/auth");
 const checkRole = require("../src/middleware/checkRole");
 
+var express = require("express");
+var user = require("../src/Controller/utilisateur.controller");
+const auth = require("../src/middleware/auth");
+const checkRole = require("../src/middleware/checkRole");
+
 var router = express.Router();
 
 router.get("/", user.getAllUtilisateurs);
