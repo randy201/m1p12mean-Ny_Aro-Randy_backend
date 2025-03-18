@@ -13,6 +13,7 @@ var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth.routes");
 var roleRouter = require("./routes/role");
 var emailRouter = require("./routes/email");
+var rendez_vousRouter = require("./routes/rendez_vous");
 
 var app = express();
 
@@ -34,14 +35,14 @@ async function connectDB() {
 connectDB();
 
 // Rate limiter configuration
-const limiter = rateLimit({
+/*const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again later",
-});
+});*/
 
 // Apply rate limiter to all routes
-app.use(limiter);
+//app.use(limiter);
 
 app.use(logger("dev"));
 async function connectDB() {
@@ -85,6 +86,7 @@ app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/roles", roleRouter);
 app.use("/email", emailRouter);
+app.use("/rdv", rendez_vousRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
