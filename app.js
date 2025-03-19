@@ -14,6 +14,7 @@ var authRouter = require("./routes/auth.routes");
 var roleRouter = require("./routes/role");
 var emailRouter = require("./routes/email");
 var rendez_vousRouter = require("./routes/rendez_vous");
+var serviceRouter = require("./routes/service");
 
 var app = express();
 
@@ -31,7 +32,6 @@ async function connectDB() {
   }
 }
 
-// Appeler la fonction de connexion
 connectDB();
 
 // Rate limiter configuration
@@ -87,6 +87,7 @@ app.use("/auth", authRouter);
 app.use("/roles", roleRouter);
 app.use("/email", emailRouter);
 app.use("/rdv", rendez_vousRouter);
+app.use("/services", serviceRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

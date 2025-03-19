@@ -34,8 +34,29 @@ async function saveRendez_vous(rendez_vous) {
   }
 }
 
+async function updateRendez_vous(id, rendez_vous) {
+  try {
+    const data = await rendez_vousModel
+      .findById(id)
+      .populate("manager", "lastname firstname email");
+    data.info = rendez_vous.info;
+    data.date = rendez_vous.date;
+    data.manager = rendez_vous.manager;
+    data.duree = rendez_vous.duree;
+    data.status = rendez_vous.status;
+    data.createdAt = data.createdAt;
+    const rep = await data.save();
+
+    return rep.populate("manager", "lastname firstname email");
+  } catch (e) {
+    console.error("Erreur lors de la mise à jour du Rendez-vous", e);
+    throw e;
+  }
+}
+
 module.exports = {
   getAllRendez_vous,
   getAllRendez_vousByStatus,
   saveRendez_vous,
+  updateRendez_vous,
 };
