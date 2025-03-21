@@ -12,7 +12,10 @@ async function getAllRendez_vous() {
 
 async function getAllRendez_vousByStatus(status) {
   try {
-    return await rendez_vousModel.find({ status: status });
+    return await rendez_vousModel
+      .find({ status: status })
+      .populate("manager", "lastname firstname email roles")
+      .populate("manager.roles", "name description");
   } catch (e) {
     console.error("Erreur lors de la réccupération des Rendez-vous", e);
     throw e;
