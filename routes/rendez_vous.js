@@ -7,5 +7,6 @@ router.get("/", rende_vousController.getAllRendez_vous);
 router.get("/status/:status", rende_vousController.getAllRendez_vousByStatus);
 router.post("/", rende_vousController.addRendez_vous);
 router.put("/:id", rende_vousController.updateRendez_vous);
+router.get("/:id", rende_vousController.getRendez_vous);
 
 module.exports = router;

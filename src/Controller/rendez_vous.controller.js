@@ -36,6 +36,16 @@ async function getAllRendez_vousByStatus(req, res, next) {
   }
 }
 
+async function getRendez_vous(req, res, next) {
+  try {
+    const data = await Rendez_vousRepository.getRendez_vous(req.params.id);
+    res.status(200).send(data);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e);
+  }
+}
+
 async function updateRendez_vous(req, res, next) {
   try {
     const data = await Rendez_vousRepository.updateRendez_vous(
@@ -102,4 +112,5 @@ module.exports = {
   addRendez_vous,
   getAllRendez_vousByStatus,
   updateRendez_vous,
+  getRendez_vous,
 };

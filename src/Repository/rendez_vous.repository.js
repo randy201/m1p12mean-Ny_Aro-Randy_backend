@@ -22,6 +22,18 @@ async function getAllRendez_vousByStatus(status) {
   }
 }
 
+async function getRendez_vous(id) {
+  try {
+    return await rendez_vousModel
+      .findById(id)
+      .populate("manager", "lastname firstname email roles")
+      .populate("manager.roles", "name description");
+  } catch (e) {
+    console.error("Erreur lors de la réccupération du Rendez-vous", e);
+    throw e;
+  }
+}
+
 async function saveRendez_vous(rendez_vous) {
   try {
     const rdv = new Rendez_vous();
@@ -62,4 +74,5 @@ module.exports = {
   getAllRendez_vousByStatus,
   saveRendez_vous,
   updateRendez_vous,
+  getRendez_vous,
 };
