@@ -14,7 +14,6 @@ router.post("/", user.ajoutUtilisateur);
 // router.put("/:id/addRole", user.addRole);
 router.put("/:id", user.updateUtilisateur);
 
-// Routes pour la gestion des rôles
 router.post("/roles/add", auth, checkRole("MANAGER"), user.addRole);
 router.post("/roles/remove", auth, checkRole("MANAGER"), user.removeRole);
 
