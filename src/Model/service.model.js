@@ -8,6 +8,7 @@ const serviceSchema = new mongoose.Schema({
     status: Number,
     reduction: Number,
   },
+  status: { type: Number, default: 0, enum: [0, 1] },
 });
 
 const Service = mongoose.model("Service", serviceSchema);

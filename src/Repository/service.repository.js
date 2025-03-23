@@ -10,6 +10,15 @@ async function getAllServices() {
   }
 }
 
+async function getService(id) {
+  try {
+    return await serviceModel.findById(id);
+  } catch (e) {
+    console.error("Erreur lors de la réccupération des Services", e);
+    throw e;
+  }
+}
+
 async function saveService(service) {
   try {
     return await serviceModel.create(service);
@@ -19,4 +28,4 @@ async function saveService(service) {
   }
 }
 
-module.exports = { getAllServices, saveService };
+module.exports = { getAllServices, saveService, getService };
