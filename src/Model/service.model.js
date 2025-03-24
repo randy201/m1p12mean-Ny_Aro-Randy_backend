@@ -9,6 +9,7 @@ const serviceSchema = new mongoose.Schema({
     reduction: Number,
   },
   status: { type: Number, default: 0, enum: [0, 1] },
+  duree: { type: Number, default: 0 },
 });
 
 const Service = mongoose.model("Service", serviceSchema);
