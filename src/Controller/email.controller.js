@@ -138,11 +138,13 @@ async function processAndSendEmail(emailData) {
            Heure : ${emailData.appointmentDetails.time || "À déterminer"}<br>
            Lieu : ${emailData.appointmentDetails.location || "À déterminer"}
         </p>
+
+        <p>Nous restons à votre disposition pour toute information complémentaire.</p>
         `
             : ""
         }
         
-        <p>Nous restons à votre disposition pour toute information complémentaire.</p>
+        
         
         <div class="signature">
           Cordialement,<br>
