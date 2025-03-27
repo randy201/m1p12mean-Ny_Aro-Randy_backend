@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Schema = mongoose.Schema;
 
-//todo: envoyer la clé secrete dans le fichier .env avec le nom JWT_SECRET
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 const utilisateurSchema = new Schema({
@@ -29,7 +28,6 @@ const utilisateurSchema = new Schema({
   ],
 });
 
-// Hash password before saving
 utilisateurSchema.pre("save", async function (next) {
   const user = this;
   if (user.isModified("pass")) {
@@ -38,7 +36,6 @@ utilisateurSchema.pre("save", async function (next) {
   next();
 });
 
-// Generate auth token
 utilisateurSchema.methods.generateAuthToken = function () {
   const user = this;
   const token = jwt.sign(
@@ -53,19 +50,16 @@ utilisateurSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-// Compare password method
 utilisateurSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.pass);
 };
 
-// Hide sensitive data when converting to JSON
 utilisateurSchema.methods.toJSON = function () {
   const user = this.toObject();
   //delete user.pass;
   return user;
 };
 
-// Création du modèle
 const Utilisateur = mongoose.model("Utilisateur", utilisateurSchema);
 
 module.exports = Utilisateur;
