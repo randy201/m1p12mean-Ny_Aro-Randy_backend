@@ -16,6 +16,7 @@ var emailRouter = require("./routes/email");
 var rendez_vousRouter = require("./routes/rendez_vous");
 var serviceRouter = require("./routes/service");
 var packRouter = require("./routes/pack");
+var missionRouter = require("./routes/mission");
 
 var app = express();
 
@@ -90,6 +91,7 @@ app.use("/email", emailRouter);
 app.use("/rdv", rendez_vousRouter);
 app.use("/services", serviceRouter);
 app.use("/packs", packRouter);
+app.use("/missions", missionRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
