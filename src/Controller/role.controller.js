@@ -15,6 +15,17 @@ async function getAllRoles(req, res, next) {
   }
 }
 
+async function findByName(req, res, next) {
+  try {
+    const data = await roleRep.getRoleByName(req.params.name);
+    res.status(200).send(data);
+  } catch (error) {
+    console.error(e);
+
+    res.status(404).send(e);
+  }
+}
+
 async function ajoutRole(req, res, next) {
   try {
     const data = await roleRep.saveRole(req.body);
@@ -27,4 +38,4 @@ async function ajoutRole(req, res, next) {
   }
 }
 
-module.exports = { getAllRoles, ajoutRole };
+module.exports = { getAllRoles, ajoutRole, findByName };

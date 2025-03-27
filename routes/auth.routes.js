@@ -9,7 +9,7 @@ router.post("/login", authController.login);
 
 // Protected route example
 router.get("/me", auth, (req, res) => {
-  res.json({ user: req.user });
+  res.json(req.user);
 });
 
 module.exports = router;
