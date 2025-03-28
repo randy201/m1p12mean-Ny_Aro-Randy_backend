@@ -19,7 +19,21 @@ async function savePlaning(planing) {
   }
 }
 
+async function getPlaning(id) {
+  try {
+    return await planingModel
+      .findById(id)
+      .populate("mecaniciens")
+      .populate("services")
+      .populate("mission");
+  } catch (e) {
+    console.error("Erreur lors de la récupération d'un planing", e);
+    throw e;
+  }
+}
+
 module.exports = {
   getAllPlanings,
   savePlaning,
+  getPlaning,
 };

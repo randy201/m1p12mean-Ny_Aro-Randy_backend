@@ -16,7 +16,11 @@ async function getAllMissions() {
 
 async function getMission(id) {
   try {
-    return await missionModel.findById(id).populate("services", "label price");
+    return await missionModel
+      .findById(id)
+      .populate("services")
+      .populate("manager")
+      .populate("client");
   } catch (e) {
     console.error("Erreur lors de la réccupération des Missions", e);
     throw e;
