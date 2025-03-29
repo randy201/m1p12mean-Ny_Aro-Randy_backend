@@ -40,9 +40,20 @@ async function updatePack(req, res, next) {
   }
 }
 
+async function deletePack(req, res, next) {
+  try {
+    const data = await PackRepository.deletePack(req.params.id);
+    res.status(200).send(data);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e);
+  }
+}
+
 module.exports = {
   getAllPacks,
   getPack,
   addPack,
   updatePack,
+  deletePack,
 };
