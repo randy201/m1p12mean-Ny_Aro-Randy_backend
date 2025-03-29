@@ -11,8 +11,15 @@ const MissionSchema = new mongoose.Schema({
   },
   services: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Service",
+      price: { type: Number },
+      label: { type: String },
+      description: { type: String },
+      duree: { type: Number, default: 0 },
+      status: {
+        type: String,
+        default: "pending",
+        enum: ["pending", "in_progress", "done", "cancelled"],
+      },
     },
   ],
   dateDebut: { type: Date, required: true },

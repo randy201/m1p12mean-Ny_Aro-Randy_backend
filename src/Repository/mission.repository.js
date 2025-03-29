@@ -3,11 +3,7 @@ const Mission = require("../Model/mission.model");
 
 async function getAllMissions() {
   try {
-    return await missionModel
-      .find()
-      .populate("services", "label price")
-      .populate("manager", "firstname lastname")
-      .populate("client", "firstname lastname");
+    return await missionModel.find().populate("client").populate("manager");
   } catch (e) {
     console.error("Erreur lors de la réccupération des Missions", e);
     throw e;
@@ -18,9 +14,8 @@ async function getMission(id) {
   try {
     return await missionModel
       .findById(id)
-      .populate("services")
-      .populate("manager")
-      .populate("client");
+      .populate("client")
+      .populate("manager");
   } catch (e) {
     console.error("Erreur lors de la réccupération des Missions", e);
     throw e;

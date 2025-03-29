@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const PackSchema = new mongoose.Schema({
   label: { type: String },
   price: { type: Number, default: 0 },
+  remise: { type: Number, default: 0 },
   services: [
     {
       type: Schema.Types.ObjectId,

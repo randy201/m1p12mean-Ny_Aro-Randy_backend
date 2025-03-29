@@ -30,7 +30,13 @@ async function savePack(pack) {
 
 async function updatePack(id, pack) {
   try {
-    return await packModel.findByIdAndUpdate(id, pack);
+    const data = await packModel.findById(id);
+    data.label = pack.label;
+    data.price = pack.price;
+    data.remise = pack.remise;
+    data.services = pack.services;
+    data.updatedAt = new Date();
+    return data.save();
   } catch (e) {
     console.error("Erreur lors de la réccupération des Packs", e);
     throw e;

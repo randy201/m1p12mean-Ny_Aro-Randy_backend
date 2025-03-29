@@ -5,7 +5,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
-const rateLimit = require("express-rate-limit");
+//const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 
 var indexRouter = require("./routes/index");
@@ -18,6 +18,7 @@ var serviceRouter = require("./routes/service");
 var packRouter = require("./routes/pack");
 var missionRouter = require("./routes/mission");
 var planingRouter = require("./routes/planing");
+var noteRouter = require("./routes/note");
 
 var app = express();
 
@@ -94,6 +95,7 @@ app.use("/services", serviceRouter);
 app.use("/packs", packRouter);
 app.use("/missions", missionRouter);
 app.use("/planings", planingRouter);
+app.use("/notes", noteRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
