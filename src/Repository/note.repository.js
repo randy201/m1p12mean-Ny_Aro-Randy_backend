@@ -3,7 +3,7 @@ const Note = require("../Model/note.model");
 
 async function getAllNotes() {
   try {
-    return await noteModel.find().populate("client");
+    return await noteModel.find();
   } catch (e) {
     console.error("Erreur lors de la réccupération des Notes", e);
     throw e;

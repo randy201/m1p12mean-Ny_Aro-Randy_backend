@@ -30,8 +30,19 @@ async function getPlaning(req, res, next) {
   }
 }
 
+async function updatePlaning(req, res, next) {
+  try {
+    const data = await PlaningRepository.updatePlaning(req.params.id, req.body);
+    res.status(200).send(data);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e);
+  }
+}
+
 module.exports = {
   getAllPlanings,
   addPlaning,
   getPlaning,
+  updatePlaning,
 };

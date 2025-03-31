@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const NoteSchema = new mongoose.Schema({
-  client: {
-    type: Schema.Types.ObjectId,
-    ref: "Utilisateur",
-  },
+  fullName: { type: String },
   createdAt: { type: Date, default: Date.now },
   note: { type: Number },
   description: { type: String },
