@@ -31,8 +31,38 @@ async function saveMission(mission) {
   }
 }
 
+async function getStatistiqueByYear(year) {
+  try {
+    const monthlyCounts = await missionModel.aggregate([
+      {
+        $match: {
+          dateDebut: {
+            $gte: new Date(year, 0, 1),
+            $lt: new Date(year, 11, 31),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { month: { $month: "$dateDebut" } },
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { _id: 1 },
+      },
+    ]);
+
+    return monthlyCounts;
+  } catch (e) {
+    console.error("Erreur lors de la réccupération des Missions", e);
+    throw e;
+  }
+}
+
 module.exports = {
   getAllMissions,
   getMission,
   saveMission,
+  getStatistiqueByYear,
 };

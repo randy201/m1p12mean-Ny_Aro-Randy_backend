@@ -30,8 +30,19 @@ async function addMission(req, res, next) {
   }
 }
 
+async function getStatistiqueByYear(req, res, next) {
+  try {
+    const data = await missionRep.getStatistiqueByYear(req.params.year);
+    res.status(200).json({ data: data });
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e);
+  }
+}
+
 module.exports = {
   getAllMissions,
   getMission,
   addMission,
+  getStatistiqueByYear,
 };
