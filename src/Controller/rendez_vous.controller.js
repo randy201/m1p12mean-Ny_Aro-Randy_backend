@@ -15,7 +15,25 @@ async function addRendez_vous(req, res, next) {
   try {
     const data = await Rendez_vousRepository.saveRendez_vous(req.body);
     if (data) {
-      const email = data.email;
+      await sendEmailDirect({
+        companyLogo: true,
+        companyName: "Mecanet",
+        to: "nyarodina@gmail.com",
+        subject: "Demande de rendez-vous",
+        recipientName: "Ny Aro Dina",
+        senderName: data.info.fullname,
+        senderTitle: "Client",
+        text: `Demande de rendez-vous du ${data.date.toLocaleString("fr-FR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })}  à Andoharanofotsy Madagascar`,
+        companyAddress: "Andoharanofotsy Antananarivo",
+        companyWebsite: "https://m1p12mean-ny-aro-randy.vercel.app/",
+      });
     }
     res.status(200).send(data);
   } catch (e) {

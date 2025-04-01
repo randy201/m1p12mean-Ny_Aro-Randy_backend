@@ -5,9 +5,11 @@ const serviceSchema = new mongoose.Schema({
   label: { type: String, required: [true, "Le nom est requis"] },
   description: { type: String },
   type: {
-    status: Number,
+    status: { type: Number, default: 0, enum: [0, 1] },
     reduction: Number,
+    updatedAt: { type: Date, default: Date.now },
   },
+  duree: { type: Number, default: 0 },
 });
 
 const Service = mongoose.model("Service", serviceSchema);
