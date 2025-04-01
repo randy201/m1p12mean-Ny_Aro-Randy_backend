@@ -7,5 +7,6 @@ router.get("/", missionController.getAllMissions);
 router.post("/", missionController.addMission);
 router.get("/:id", missionController.getMission);
 router.get("/number/:year", missionController.getStatistiqueByYear);
+router.put("/:id", missionController.updateMission);
 
 module.exports = router;

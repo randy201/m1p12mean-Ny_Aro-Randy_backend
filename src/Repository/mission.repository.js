@@ -31,6 +31,18 @@ async function saveMission(mission) {
   }
 }
 
+async function updateMission(mission) {
+  try {
+    return await missionModel
+      .findByIdAndUpdate(mission)
+      .populate("client")
+      .populate("manager");
+  } catch (e) {
+    console.error("Erreur lors de la mise à jour d'une Mission", e);
+    throw e;
+  }
+}
+
 async function getStatistiqueByYear(year) {
   try {
     const monthlyCounts = await missionModel.aggregate([
@@ -65,4 +77,5 @@ module.exports = {
   getMission,
   saveMission,
   getStatistiqueByYear,
+  updateMission,
 };

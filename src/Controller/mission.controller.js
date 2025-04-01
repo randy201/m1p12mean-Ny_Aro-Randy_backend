@@ -40,9 +40,20 @@ async function getStatistiqueByYear(req, res, next) {
   }
 }
 
+async function updateMission(req, res, next) {
+  try {
+    const data = await missionRep.updateMission(req.body);
+    res.status(200).send(data);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e);
+  }
+}
+
 module.exports = {
   getAllMissions,
   getMission,
   addMission,
   getStatistiqueByYear,
+  updateMission,
 };
