@@ -8,7 +8,6 @@ var router = express.Router();
 router.get("/", user.getAllUtilisateurs);
 router.get("/:id", user.findUserByID);
 
-// Seuls les managers peuvent ajouter des utilisateurs
 //router.post("/", auth, checkRole('Manager'), user.ajoutUtilisateur);
 router.post("/", user.ajoutUtilisateur);
 // router.put("/:id/addRole", user.addRole);
