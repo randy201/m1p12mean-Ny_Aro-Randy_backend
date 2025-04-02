@@ -31,12 +31,20 @@ async function saveMission(mission) {
   }
 }
 
-async function updateMission(mission) {
+async function updateMission(id, mission) {
   try {
-    return await missionModel
-      .findByIdAndUpdate(mission)
-      .populate("client")
-      .populate("manager");
+    console.log(id);
+
+    const data = await missionModel.findById(id);
+    if (!data) {
+      throw new Error("Mission non trouvée");
+    }
+    data.client = mission.client;
+    data.infoMission = mission.infoMission;
+    data.manager = mission.manager;
+    data.services = mission.services;
+    data.dateDebut = mission.dateDebut;
+    return await data.save();
   } catch (e) {
     console.error("Erreur lors de la mise à jour d'une Mission", e);
     throw e;

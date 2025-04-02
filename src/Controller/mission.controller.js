@@ -42,7 +42,7 @@ async function getStatistiqueByYear(req, res, next) {
 
 async function updateMission(req, res, next) {
   try {
-    const data = await missionRep.updateMission(req.body);
+    const data = await missionRep.updateMission(req.params.id, req.body);
     res.status(200).send(data);
   } catch (e) {
     console.error(e);

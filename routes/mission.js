@@ -9,6 +9,6 @@ router.get("/", auth, missionController.getAllMissions);
 router.post("/", auth, checkRole("MANAGER"), missionController.addMission);
 router.get("/:id", auth, missionController.getMission);
 router.get("/number/:year", auth, missionController.getStatistiqueByYear);
-router.put("/:id", auth, missionController.updateMission);
+router.put("/update/:id", auth, missionController.updateMission);
 
 module.exports = router;
