@@ -2,7 +2,19 @@ const missionRep = require("../Repository/mission.repository");
 
 async function getAllMissions(req, res, next) {
   try {
-    const data = await missionRep.getAllMissions();
+    const { search, page, limit = 10, userId = "" } = req.query;
+    let data = {};
+
+    if (page) {
+      data = await missionRep.getAllMissionsPaginate(
+        search,
+        +page,
+        +limit,
+        userId
+      );
+    } else {
+      data = await missionRep.getAllMissions();
+    }
     res.status(200).send(data);
   } catch (e) {
     console.error(e);

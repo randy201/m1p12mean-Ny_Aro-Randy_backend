@@ -11,6 +11,35 @@ async function getAllUtilisateurs() {
   }
 }
 
+async function getPaginate(page = 1, limit = 10, search = "", type) {
+  try {
+    const skip = (page - 1) * limit;
+    const roleName = type.replace("mechanic", "mecanic");
+    const role = await userRepository.getRoleByName(roleName.toUpperCase());
+    if (!role) {
+      throw new Error("role_not_found");
+    }
+    const query = { roles: role };
+    if (search) {
+      query.$or = [
+        { lastname: { $regex: search, $options: "i" } },
+        { firstname: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ];
+    }
+    const count = await userModel.countDocuments(query);
+    const data = await userModel
+      .find(query)
+      .populate("roles", "name description")
+      .limit(limit)
+      .skip(skip);
+    return { data, page, totalPages: Math.ceil(count / limit) };
+  } catch (e) {
+    console.error("Erreur lors de la réccupération des Utilisateurs", e);
+    throw e;
+  }
+}
+
 async function getAllByRoleName(roleName) {
   roleName = roleName.replace("mechanic", "mecanic");
   try {
@@ -143,4 +172,5 @@ module.exports = {
   findUserByID,
   getAllByRoleName,
   updateUtilisateur,
+  getPaginate,
 };

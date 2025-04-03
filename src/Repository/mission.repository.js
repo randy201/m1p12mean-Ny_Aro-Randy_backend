@@ -10,6 +10,56 @@ async function getAllMissions() {
   }
 }
 
+async function getAllMissionsPaginate(
+  search = "",
+  page = 1,
+  limit = 10,
+  userId = ""
+) {
+  try {
+    const skip = (page - 1) * limit;
+
+    // Build the search conditions
+    const searchConditions = search
+      ? {
+          $or: [
+            { "infoMission.marque": { $regex: search, $options: "i" } },
+            { "infoMission.model": { $regex: search, $options: "i" } },
+            { "infoMission.serialNumber": { $regex: search, $options: "i" } },
+            { "infoMission.description": { $regex: search, $options: "i" } },
+          ],
+        }
+      : {};
+
+    // Build the user filter condition
+    const userCondition = userId ? { client: userId } : {};
+
+    // Combine conditions
+    const query = {
+      ...userCondition,
+      ...searchConditions,
+    };
+
+    const total = await missionModel.countDocuments(query);
+    const data = await missionModel
+      .find(query)
+      .populate("client")
+      .populate("manager")
+      .skip(skip)
+      .limit(limit)
+      .sort({ dateDebut: -1 });
+
+    return {
+      data,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    };
+  } catch (e) {
+    console.error("Erreur lors de la réccupération des Missions", e);
+    throw e;
+  }
+}
+
 async function getMission(id) {
   try {
     return await missionModel
@@ -86,4 +136,5 @@ module.exports = {
   saveMission,
   getStatistiqueByYear,
   updateMission,
+  getAllMissionsPaginate,
 };

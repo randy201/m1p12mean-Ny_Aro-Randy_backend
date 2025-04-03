@@ -10,6 +10,30 @@ async function getAllPacks() {
   }
 }
 
+async function getAllPacksPaginate(page = 1, limit = 10, search = "") {
+  try {
+    const skip = (page - 1) * limit;
+    const query = { status: 0 };
+    if (search) {
+      query.label = { $regex: search, $options: "i" };
+    }
+    const total = await packModel.countDocuments(query);
+    const data = await packModel
+      .find(query)
+      .populate("services")
+      .skip(skip)
+      .limit(limit);
+    return {
+      data,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    };
+  } catch (e) {
+    console.error("Erreur lors de la réccupération des Packs", e);
+    throw e;
+  }
+}
+
 async function getPack(id) {
   try {
     return await packModel.findById(id).populate("services");
@@ -57,6 +81,7 @@ async function deletePack(id) {
 
 module.exports = {
   getAllPacks,
+  getAllPacksPaginate,
   getPack,
   savePack,
   updatePack,

@@ -1,6 +1,49 @@
 const rendez_vousModel = require("../Model/rendez_vous.model");
 const Rendez_vous = require("../Model/rendez_vous.model");
 
+async function getAllRendez_vousPaginate(
+  search = "",
+  page = 1,
+  limit = 5,
+  status = "pending"
+) {
+  try {
+    const skip = (page - 1) * limit;
+    let query = { status: status };
+
+    if (search) {
+      query = {
+        $and: [
+          {
+            $or: [
+              { "info.fullname": { $regex: search, $options: "i" } },
+              { "info.email": { $regex: search, $options: "i" } },
+            ],
+          },
+          { status: status },
+        ],
+      };
+    }
+
+    const total = await rendez_vousModel.countDocuments(query);
+    const data = await rendez_vousModel
+      .find(query)
+      .populate("manager", "lastname firstname email roles")
+      .skip(skip)
+      .limit(limit)
+      .sort({ date: -1 });
+
+    return {
+      data,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    };
+  } catch (e) {
+    console.error("Erreur lors de la réccupération des Rendez-vous", e);
+    throw e;
+  }
+}
+
 async function getAllRendez_vous() {
   try {
     return await rendez_vousModel.find();
@@ -75,4 +118,5 @@ module.exports = {
   saveRendez_vous,
   updateRendez_vous,
   getRendez_vous,
+  getAllRendez_vousPaginate,
 };
