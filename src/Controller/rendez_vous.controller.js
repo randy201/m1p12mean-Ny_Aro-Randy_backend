@@ -44,9 +44,22 @@ async function addRendez_vous(req, res, next) {
 
 async function getAllRendez_vousByStatus(req, res, next) {
   try {
-    const data = await Rendez_vousRepository.getAllRendez_vousByStatus(
-      req.params.status
-    );
+    const { search, page, limit = 10 } = req.query;
+    let data = {};
+
+    if (page) {
+      data = await Rendez_vousRepository.getAllRendez_vousPaginate(
+        search,
+        +page,
+        +limit,
+        req.params.status
+      );
+    } else {
+      data = await Rendez_vousRepository.getAllRendez_vousByStatus(
+        req.params.status
+      );
+      console.log(data);
+    }
     res.status(200).send(data);
   } catch (e) {
     console.error(e);

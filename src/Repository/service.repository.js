@@ -10,6 +10,32 @@ async function getAllServices() {
   }
 }
 
+async function getAllServicesPaginate(page = 1, limit = 10, search = "") {
+  try {
+    const skip = (page - 1) * limit;
+    const query = { "type.status": 0 };
+    if (search) {
+      query.$or = [
+        { label: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+    const total = await serviceModel.countDocuments(query);
+    const data = await serviceModel
+      .find(query)
+      .skip(skip)
+      .limit(limit);
+    return {
+      data,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    };
+  } catch (e) {
+    console.error("Erreur lors de la réccupération des Services", e);
+    throw e;
+  }
+}
+
 async function getService(id) {
   try {
     return await serviceModel.findById(id);
@@ -51,6 +77,7 @@ async function deleteService(id) {
 
 module.exports = {
   getAllServices,
+  getAllServicesPaginate,
   saveService,
   getService,
   updateService,

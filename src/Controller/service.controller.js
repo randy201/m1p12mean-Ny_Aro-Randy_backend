@@ -2,8 +2,14 @@ const serviceRep = require("../Repository/service.repository");
 
 async function getAllServices(req, res, next) {
   try {
-    const data = await serviceRep.getAllServices();
-    res.status(200).send(data);
+    const { page, search, limit = 10 } = req.query;
+    if (page) {
+      const data = await serviceRep.getAllServicesPaginate(page, limit, search);
+      res.status(200).send(data);
+    } else {
+      const data = await serviceRep.getAllServices();
+      res.status(200).send(data);
+    }
   } catch (e) {
     console.error(e);
     res.status(500).send(e);
