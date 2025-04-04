@@ -3,16 +3,11 @@ const utilisateurRep = require("../Repository/utilisateur.repository");
 
 async function getAllUtilisateurs(req, res, next) {
   try {
-    const type = req.query.role || null;
-    console.log(`le type est ${type}`);
+    const { role, page, search, limit = 10 } = req.query;
+    console.log(`le type est ${role}`);
 
-    if (
-      type !== "null" &&
-      type !== "undefined" &&
-      type !== "" &&
-      type !== null
-    ) {
-      const data = await utilisateurRep.getAllByRoleName(type);
+    if (page && role) {
+      const data = await utilisateurRep.getPaginate(page, limit, search, role);
       res.status(200).send(data);
     } else {
       const data = await utilisateurRep.getAllUtilisateurs();

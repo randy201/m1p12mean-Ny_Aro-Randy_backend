@@ -2,8 +2,14 @@ const PackRepository = require("../Repository/pack.repository");
 
 async function getAllPacks(req, res, next) {
   try {
-    const data = await PackRepository.getAllPacks();
-    res.status(200).send(data);
+    const { page, search, limit = 10 } = req.query;
+    if (page) {
+      const data = await PackRepository.getAllPacksPaginate(page, limit, search);
+      res.status(200).send(data);
+    } else {
+      const data = await PackRepository.getAllPacks();
+      res.status(200).send(data);
+    }
   } catch (e) {
     console.error(e);
     res.status(500).send(e);

@@ -21,10 +21,7 @@ async function getRoleByName(name) {
 
 async function saveRole(role) {
   try {
-    const roleData = new Role();
-    roleData.nom = role.nom;
-    roleData.description = role.description;
-    return await roleData.save();
+    return await roleModel.create(role);
   } catch (e) {
     console.error("Erreur lors de l'enregistrement :", e);
     throw e;
